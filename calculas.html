@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="calculas.css">
+    <body>
+        <div id="function_input">
+            <label for="input">Enter task:</label>
+            <input type="text" id="input" placeholder="the funtion">
+            <button id="button_enter_function">submit_function</button>
+        </div>
+        <div id="upper_bound">
+            <label for="input_upper_bound">Enter task:</label>
+            <input type="number" id="input_upper_bound" placeholder="upper bound of the funtion by integrating">
+            <button id="button_upper_bound">submit_upper_bound</button>
+        </div>
+        <div id="lower_bound">
+            <label for="lower_bounds">Enter task:</label>
+            <input type="number" id="lower_bounds" placeholder="lower_bound_of the fucntion under integrate">
+            <button id="button_lower_bound">submit_lower_bound</button>
+        </div>
+        <button id="button">submit</button>
+        <div id="sam">
+            <label for="sam1">the value is</label>
+            <p id="sam1"></p>
+        </div>
+    </body>
+    <script>
+        document.getElementById('button').addEventListener('click',()=>{
+            var varibles = document.getElementById('input').value;
+            const upper_bound = document.getElementById('input_upper_bound').value;
+            const lower_bound = document.getElementById('lower_bounds').value;
+            let total = 0;
+            function constants(k){
+                if(k==0){
+                    return 'no'
+                }else{
+                    return varibles[k-1]
+                }
+            }
+            for(let i=0;i<varibles.length;i++){
+                if(varibles[i]=='x'){
+                    if(varibles[i+1]=='^'){
+                        const power = parseInt(varibles[i+2],10)+1;
+                        var sum = (upper_bound**(power))/(power)-(lower_bound**(power))/(power)
+                        if(!isNaN(constants(i))){
+                            total = total+sum*parseInt(constants(i))
+                            if(i<=2){
+                                //no opertate
+                            }else{
+                                switch(varibles[i-2]){
+                                    case '+':
+                                        total = total + sum*parseInt(constants(i));
+                                    case '-':
+                                        total = total - sum*parseInt(constants(i))
+                                }
+                            }
+                        }else{
+                            if(i<=2){
+                                //no opertate
+                                total = total + sum
+                            }else{
+                                switch(varibles[i-1]){
+                                    case '+':
+                                        console.log('nod')
+                                        total = total + sum;
+                                        break
+                                    case '-':
+                                        total = total - sum;
+                                        break
+                                }
+                            }
+                        }
+                        console.log('yes');
+                    }
+                };
+            }
+            console.log(total)
+            document.getElementById('sam1').textContent = total
+        })
+
+    </script>
+</html>
